@@ -1,8 +1,9 @@
 import logging
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.http import JsonResponse, HttpResponse
+from django.template import loader
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
 from app.models import Student, Major
 
 _logger = logging.getLogger(__name__)
@@ -46,3 +47,25 @@ def _form(request, pk=None):
             }
 
     return JsonResponse(response, safe=False, status=status)
+
+def _remove(request, pk):
+    context = {
+        "title": "Halaman Jurusan",
+        "breadcrumb": "Jurusan",
+        "segment": "major",
+        "data": Major.objects.annotate(total_students=Count('student'))
+    }
+    html_template = loader.get_template('app/major/page.html')
+    try:
+        Major.objects.get(pk=pk).delete()
+        context = {
+            'message': 'Berhasil menghapus data',
+
+        }
+    except Exception as err:
+        _logger.error(str(err))
+        context = {
+            'message': 'Gagal menghapus data'
+        }
+    
+    return HttpResponse(html_template.render(context, request))

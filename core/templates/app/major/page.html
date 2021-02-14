@@ -48,6 +48,7 @@
                         <th>Nama Jurusan</th>
                         <th>Tentang Jurusan</th>
                         <th>Jumlah Mahasiswa</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,11 @@
                         <td>{{ row.name }}</td>
                         <td>{{ row.desc }}</td>
                         <td>{{ row.total_students }}</td>
+                        <td>
+                          <a href="{% url 'major_remove' row.id %}" class="btn btn-danger" id="removeRecord">
+                            <i class="feather icon-trash"></i>
+                          </a>
+                        </td>
                       </tr>
                       {% endfor %}
                     </tbody>
