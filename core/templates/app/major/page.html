@@ -1,10 +1,7 @@
-{% extends "layouts/base.html" %}
-{% block title %} {{ title }} {% endblock %}
+{% extends "layouts/base.html" %} {% block title %} {{ title }} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-{% endblock stylesheets %}
-{% block content %}
+{% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
 <div class="pcoded-content">
   <div class="pcoded-inner-content">
@@ -20,7 +17,9 @@
               <li class="breadcrumb-item">
                 <a href="index.html"><i class="feather icon-home"></i></a>
               </li>
-              <li class="breadcrumb-item"><a href="javascript:">{{ breadcrumb }}</a></li>
+              <li class="breadcrumb-item">
+                <a href="javascript:">{{ breadcrumb }}</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -31,9 +30,7 @@
       <div class="page-wrapper">
         <!-- [ Main Content ] start -->
         <div class="row">
-
-          <!-- [ Hover-table ] start -->
-          <div class="col-xl-12">
+          <div class="col-xl-8">
             <div class="card">
               <div class="card-header">
                 <h5>Data Jurusan</h5>
@@ -53,7 +50,7 @@
                     <tbody>
                       {% for row in data %}
                       <tr>
-                        <th scope="row">{{ forloop.counter  }}</th>
+                        <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ row.code }}</td>
                         <td>{{ row.name }}</td>
                         <td>{{ row.desc }}</td>
@@ -66,8 +63,43 @@
               </div>
             </div>
           </div>
-          <!-- [ Hover-table ] end -->
-          
+
+          <div class="col-xl-4">
+            <div class="card">
+              <div class="card-header">
+                <h5>Form Jurusan</h5>
+              </div>
+              <div class="card-block">
+                <form>
+                  <div class="form-group">
+                    <label for="code">Kode Jurusan</label>
+                    <input id="code"
+                      type="text"
+                      class="form-control"
+                      placeholder="(SI, TI ..)"
+                      name="code" />
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Nama Jurusan</label>
+                    <input id="name"
+                      type="text"
+                      class="form-control"
+                      placeholder="(Sistem Informasi, Teknik Informatika ..)"
+                      name="name" />
+                  </div>
+                  <div class="form-group">
+                    <label for="description">
+                      Tentang Jurusan
+                    </label >
+                    <textarea class="form-control"
+                      id="description"
+                      rows="3"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- [ Main Content ] end -->
       </div>
@@ -78,5 +110,4 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-{% endblock javascripts %}
+{% block javascripts %} {% endblock javascripts %}
