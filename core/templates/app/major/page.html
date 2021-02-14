@@ -2,7 +2,9 @@
 {% block title %} {{ title }} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %} {% endblock stylesheets %}
+{% block stylesheets %}
+{% include 'app/major/style.html' %}
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -34,6 +36,19 @@
         <!-- [ Main Content ] start -->
         <div class="row">
           <div class="col-xl-8">
+            {% if messages %}
+              <div class="row">
+                <div class="col-12 text-center mb-3 mt-1">
+                  {% for message in messages %}
+                    {% if message.level_tag == 'info' %}
+                      <a href="#!" class="label theme-bg text-white f-12">{{ message }}</a>
+                    {% else %}
+                      <a href="#!" class="label theme-bg2 text-white f-12">{{ message }}</a>
+                    {% endif %}                  
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
             <div class="card">
               <div class="card-header">
                 <h5>Data Jurusan</h5>
@@ -60,8 +75,8 @@
                         <td>{{ row.desc }}</td>
                         <td>{{ row.total_students }}</td>
                         <td>
-                          <a href="{% url 'major_remove' row.id %}" class="btn btn-danger" id="removeRecord">
-                            <i class="feather icon-trash"></i>
+                          <a href="{% url 'major_remove' row.id %}" id="removeRecord">
+                            <i class="feather icon-trash f-30 text-c-red"></i>
                           </a>
                         </td>
                       </tr>
