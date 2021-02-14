@@ -1,7 +1,10 @@
-{% extends "layouts/base.html" %} {% block title %} {{ title }} {% endblock %}
+{% extends "layouts/base.html" %}
+{% block title %} {{ title }} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %} {% endblock stylesheets %} {% block content %}
+{% block stylesheets %} {% endblock stylesheets %}
+
+{% block content %}
 
 <div class="pcoded-content">
   <div class="pcoded-inner-content">
@@ -63,42 +66,9 @@
               </div>
             </div>
           </div>
-
+          
           <div class="col-xl-4">
-            <div class="card">
-              <div class="card-header">
-                <h5>Form Jurusan</h5>
-              </div>
-              <div class="card-block">
-                <form>
-                  <div class="form-group">
-                    <label for="code">Kode Jurusan</label>
-                    <input id="code"
-                      type="text"
-                      class="form-control"
-                      placeholder="(SI, TI ..)"
-                      name="code" />
-                  </div>
-                  <div class="form-group">
-                    <label for="name">Nama Jurusan</label>
-                    <input id="name"
-                      type="text"
-                      class="form-control"
-                      placeholder="(Sistem Informasi, Teknik Informatika ..)"
-                      name="name" />
-                  </div>
-                  <div class="form-group">
-                    <label for="description">
-                      Tentang Jurusan
-                    </label >
-                    <textarea class="form-control"
-                      id="description"
-                      rows="3"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
-            </div>
+            {% include 'app/major/form.html' %}
           </div>
         </div>
         <!-- [ Main Content ] end -->
@@ -110,4 +80,6 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %} {% endblock javascripts %}
+{% block javascripts %}
+{% include 'app/major/script.html' %}
+{% endblock javascripts %}
