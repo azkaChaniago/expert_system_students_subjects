@@ -38,6 +38,13 @@ class MajorConcentration(models.Model):
 
 
 class Student(models.Model):
+    STUDENT_STATE = (
+        ('active', 'Aktif'),
+        ('inactive', 'Cuti'),
+        ('graduate', 'Lulus'),
+        ('drop', 'Drop Out')
+    )
+
     name = models.CharField(
         max_length=100,
         default="",
@@ -59,6 +66,11 @@ class Student(models.Model):
         blank=True
     )
     gpa = models.FloatField(default=0.0, verbose_name="IPK")
+    status = models.CharField(
+        max_length=15,
+        choices=STUDENT_STATE,
+        default="active",
+        verbose_name="Status Mahasiswa")
 
     def __str__(self):
         return f"[{self.npm}] {self.name}"
