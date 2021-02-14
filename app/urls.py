@@ -10,7 +10,7 @@ urlpatterns = [
 
     # The home page
     path('', pages.index, name='home'),
-    path('jurusan', major._page, name='major'),
+    path('jurusan', major._page, name='major_page'),
     path('jurusan/form/<int:pk>', major._form, name='major_form'),
 
     # Matches any html file

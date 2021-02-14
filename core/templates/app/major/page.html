@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% block title %} Dashboard {% endblock %}
+{% block title %} {{ title }} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -14,16 +14,13 @@
         <div class="row align-items-center">
           <div class="col-md-12">
             <div class="page-header-title">
-              <h5 class="m-b-10">Bootstrap Basic Tables</h5>
+              <h5 class="m-b-10">{{ title }}</h5>
             </div>
             <ul class="breadcrumb">
               <li class="breadcrumb-item">
                 <a href="index.html"><i class="feather icon-home"></i></a>
               </li>
-              <li class="breadcrumb-item"><a href="#!">Tables</a></li>
-              <li class="breadcrumb-item">
-                <a href="javascript:">Basic Tables</a>
-              </li>
+              <li class="breadcrumb-item"><a href="javascript:">{{ breadcrumb }}</a></li>
             </ul>
           </div>
         </div>
@@ -39,10 +36,7 @@
           <div class="col-xl-12">
             <div class="card">
               <div class="card-header">
-                <h5>Hover Table</h5>
-                <span class="d-block m-t-5"
-                  >use class <code>table-hover</code> inside table element</span
-                >
+                <h5>Data Jurusan</h5>
               </div>
               <div class="card-block table-border-style">
                 <div class="table-responsive">
@@ -50,30 +44,22 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th>Kode Jurusan</th>
+                        <th>Nama Jurusan</th>
+                        <th>Tentang Jurusan</th>
+                        <th>Jumlah Mahasiswa</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for row in data %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{ forloop.counter  }}</th>
+                        <td>{{ row.code }}</td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.desc }}</td>
+                        <td>{{ row.total_students }}</td>
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
