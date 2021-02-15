@@ -14,6 +14,22 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
 
+    const bubble = document.querySelector('a.label');
+    if (bubble) {
+      setTimeout(() => {
+        let opacity = 1;
+        let timer = setInterval(() => {
+          if (opacity <= 0.1) {
+            clearInterval(timer);
+            bubble.style.display = 'none';
+          }
+          bubble.style.opacity = opacity;
+          bubble.style.filter = `alpha(opacity=${opacity * 100})`;
+          opacity -= opacity * 0.1;
+        }, 100);
+      }, 2000);
+    }
+
     form.addEventListener('submit', async(event) => {
       event.preventDefault();
 
@@ -46,7 +62,4 @@
     });
   });
 
-  $(document).ready(() => {
-    $('#alert').fadeTo(2000, 500).slideUp(500, () => $('#alert').slideUp(500));
-  });
 </script>
