@@ -10,6 +10,7 @@ from app.models import Student, Major
 _logger = logging.getLogger(__name__)
 _logger.setLevel(level=logging.DEBUG)
 
+
 @login_required(login_url="/login")
 def _page(request):
     context = {
@@ -21,6 +22,7 @@ def _page(request):
 
     return render(request, "app/major/page.html", context)
 
+
 def _get_one(request, pk):
     if not pk:
         _logger.error('PK is not supplied!')
@@ -28,7 +30,7 @@ def _get_one(request, pk):
             'message': 'Jurusan tidak terdaftar'
         }
         return JsonResponse(response, safe=False)
-    
+
     major = Major.objects.get(pk=pk)
     response = {
         'id': major.pk,
@@ -79,6 +81,7 @@ def _form(request, pk=None):
 
     return JsonResponse(response, safe=False, status=status)
 
+
 def _remove(request, pk):
     try:
         Major.objects.get(pk=pk).delete()
@@ -86,6 +89,5 @@ def _remove(request, pk):
     except Exception as err:
         _logger.error(str(err))
         messages.error(request, 'Gagal menghapus data')
-    
-    # return HttpResponse(html_template.render(context, request))
+
     return redirect(reverse('major_page'))
