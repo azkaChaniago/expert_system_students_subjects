@@ -3,7 +3,6 @@
   const url = `{% url "major_form" %}`;
 
   async function validatingInput(input) {
-    console.log(input.value)
     if (input.value === 'undefined' || input.value === null || input.value === '') {
       input.style.borderColor = 'red';
       return false;
@@ -30,12 +29,27 @@
       }, 2000);
     }
 
+    const editButton = document.querySelectorAll('.selectRecord');
+    [... editButton].forEach(element => {
+      element.addEventListener('click', async (event) => {
+        event.preventDefault();
+        let url = await event.target.href;
+        let request = await fetch(url).then(res => res.json());
+        document.querySelector('input#primary_key').value = request.id;
+        document.querySelector('input#code').value = request.code;
+        document.querySelector('input#name').value = request.name;
+        document.querySelector('textarea#description').innerText = request.desc;
+      });
+    });
+
     form.addEventListener('submit', async(event) => {
       event.preventDefault();
-
-      let code = await validatingInput(event.target[1]);
-      let name = await validatingInput(event.target[2]);
-      let description = await validatingInput(event.target[3]);
+      
+      let endpoint = url;
+      let id = await validatingInput(event.target[1]);
+      let code = await validatingInput(event.target[2]);
+      let name = await validatingInput(event.target[3]);
+      let description = await validatingInput(event.target[4]);
 
       if (code === false || name === false || description === false){
         console.log('Input field is mandatory!');
@@ -48,16 +62,18 @@
       data.append('name', name);
       data.append('description', description);
 
-      fetch(url, {
+      if (id) {
+        endpoint = `${endpoint}${id}`;
+      }
+      fetch(endpoint, {
         method: 'POST',
         body: data
       }).then(response => {
-        console.log(response.json());
         if (response.status === 201) {
           location.reload();
         }
       }).catch(error => {
-        console.log(error);
+        console.error(error);
       });
     });
   });

@@ -75,8 +75,11 @@
                         <td>{{ row.desc }}</td>
                         <td>{{ row.total_students }}</td>
                         <td>
-                          <a href="{% url 'major_remove' row.id %}" id="removeRecord">
-                            <i class="feather icon-trash f-30 text-c-red"></i>
+                          <a href="{% url 'major_remove' row.id %}" class="removeRecord">
+                            <i class="feather icon-trash f-18 text-c-red"></i>
+                          </a>
+                          <a href="{% url 'major_one' row.id %}" class="selectRecord">
+                            <i class="feather icon-edit-1 f-18 text-c-blue"></i>
                           </a>
                         </td>
                       </tr>

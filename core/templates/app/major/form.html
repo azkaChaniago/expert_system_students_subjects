@@ -5,6 +5,7 @@
   <div class="card-block">
     <form id="form-major">
       {% csrf_token %}
+      <input type="hidden" name="id" id="primary_key">
       <div class="form-group">
         <label for="code">Kode Jurusan</label>
         <input id="code"

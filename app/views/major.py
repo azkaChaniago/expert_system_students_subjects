@@ -21,22 +21,52 @@ def _page(request):
 
     return render(request, "app/major/page.html", context)
 
+def _get_one(request, pk):
+    if not pk:
+        _logger.error('PK is not supplied!')
+        response = {
+            'message': 'Jurusan tidak terdaftar'
+        }
+        return JsonResponse(response, safe=False)
+    
+    major = Major.objects.get(pk=pk)
+    response = {
+        'id': major.pk,
+        'code': major.code,
+        'name': major.name,
+        'desc': major.desc,
+    }
+
+    return JsonResponse(response, safe=False)
+
+
 @login_required(login_url="/login")
 def _form(request, pk=None):
     response = {}
     status = 200
 
     if request.POST:
+        message = ''
         try:
-            Major(
-                name=request.POST.get('name'),
-                code=request.POST.get('code'),
-                desc=request.POST.get('description')
-            ).save()
+            if not pk:
+                Major(
+                    name=request.POST.get('name'),
+                    code=request.POST.get('code'),
+                    desc=request.POST.get('description')
+                ).save()
+                message = 'Berhasil menambah data!'
+            else:
+                major = Major.objects.get(pk=pk)
+                major.name = request.POST.get('name')
+                major.code = request.POST.get('code')
+                major.desc = request.POST.get('description')
+                major.save()
+                message = 'Data berhasil di update!'
+
             status = 201
             response = {
                 'log': 'Successfully saved new Major',
-                'message': 'Berhasil menambah data'
+                'message': message
             }
             _logger.info(response.get('log'))
         except Exception as err:
@@ -44,19 +74,12 @@ def _form(request, pk=None):
             status = 500
             response = {
                 'log': str(err),
-                'message': 'Terjadi kesalahan saat menambah data!'
+                'message': 'Terjadi kesalahan saat menambah / mengubah data!'
             }
 
     return JsonResponse(response, safe=False, status=status)
 
 def _remove(request, pk):
-    # context = {
-    #     "title": "Halaman Jurusan",
-    #     "breadcrumb": "Jurusan",
-    #     "segment": "major",
-    #     "data": Major.objects.annotate(total_students=Count('student'))
-    # }
-    # html_template = loader.get_template('app/major/page.html')
     try:
         Major.objects.get(pk=pk).delete()
         messages.info(request, 'Berhasil menghapus data')
